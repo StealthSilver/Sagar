@@ -32,9 +32,20 @@ body {
 
 .sagar-logo {
   position: relative;
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
   line-height: 1;
   --reveal-r: 56px;
+}
+
+.sagar-logo__line {
+  position: relative;
+  display: inline-block;
+}
+
+.sagar-logo__secondary {
+  margin-top: 0.08em;
 }
 
 .sagar-logo__text {
