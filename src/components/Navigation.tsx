@@ -10,6 +10,7 @@ const items: NavItem[] = [
   { label: "ABOUT", href: "#about" },
   { label: "WORKS", href: "#works" },
   { label: "CONTACT", href: "#contact" },
+  { label: "RESUME", href: "/resume.pdf" },
 ];
 
 type Props = {
@@ -90,6 +91,8 @@ export default function Navigation({ onAboutClick, aboutOpen = false }: Props) {
             );
           }
 
+          const isExternal = item.href.startsWith("/") || item.href.startsWith("http");
+
           return (
             <li key={item.href}>
               <Link
@@ -101,6 +104,8 @@ export default function Navigation({ onAboutClick, aboutOpen = false }: Props) {
                       ? onContactClick
                       : undefined
                 }
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
                 className={linkClasses}
               >
                 {item.label}
