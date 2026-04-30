@@ -116,7 +116,7 @@ export default function Works() {
         <MarqueeWhatIDo />
 
         <div className="relative mx-auto flex w-full max-w-7xl flex-1 min-h-0 flex-col items-stretch gap-4 px-5 pb-6 pt-4 sm:px-6 sm:gap-6 md:flex-row md:items-center md:gap-10 md:pb-10 md:pt-6 lg:gap-14">
-          <div className="relative mx-auto aspect-[4/5] w-[58%] max-w-[200px] shrink-0 overflow-hidden rounded-2xl border border-black/10 bg-black/5 shadow-[0_30px_60px_-20px_rgba(11,23,34,0.35)] sm:w-[46%] sm:max-w-[260px] md:mx-0 md:w-[42%] md:max-w-[460px]">
+          <div className="relative mx-auto aspect-[4/5] w-[78%] max-w-[280px] shrink-0 overflow-hidden rounded-2xl border border-black/10 bg-black/5 shadow-[0_30px_60px_-20px_rgba(11,23,34,0.35)] sm:w-[52%] sm:max-w-[320px] md:mx-0 md:w-[42%] md:max-w-[460px]">
             {works.map((work, index) => {
               const src = imageByCompany[work.company];
               if (!src) return null;

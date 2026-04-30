@@ -85,7 +85,7 @@ I haven't done my job yet.
   }, [aboutOpen, mishraWidth]);
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden bg-[#f9f6eb]">
+    <section className="relative min-h-[100svh] w-full overflow-hidden bg-[#f9f6eb] md:min-h-screen">
       <div
         className="absolute inset-y-0 right-0 hidden w-[25%] bg-[#0b1722] md:block"
         style={{
@@ -95,7 +95,7 @@ I haven't done my job yet.
       />
 
       <div
-        className="relative z-50 mx-auto min-h-screen max-w-7xl px-5 pt-6 sm:px-6 sm:pt-8"
+        className="relative z-50 mx-auto min-h-[100svh] max-w-7xl px-5 pt-6 sm:px-6 sm:pt-8 md:min-h-screen"
       >
         <div ref={logoWrapRef} className="inline-block max-w-full">
           <Link href="/" aria-label="Go to home">
@@ -181,7 +181,7 @@ I haven't done my job yet.
           Digital Content Manager based in Bengaluru.
         </div>
 
-        <div className="absolute bottom-6 right-5 sm:bottom-8 sm:right-0">
+        <div className="absolute bottom-4 right-4 sm:bottom-8 sm:right-0">
           <Navigation
             aboutOpen={aboutOpen}
             onAboutClick={() => setAboutOpen((v) => !v)}
