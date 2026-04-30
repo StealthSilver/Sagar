@@ -3,12 +3,12 @@
 import Navigation from "@/components/Navigation";
 import SagarLogo from "@/components/SagarLogo";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useLanding } from "@/state/landing";
 
 export default function Hero() {
-  const [aboutOpen, setAboutOpen] = useState(false);
+  const { aboutOpen, setAboutOpen } = useLanding();
   const [aboutTextIn, setAboutTextIn] = useState(false);
   const [mishraWidth, setMishraWidth] = useState<number | null>(null);
-  const pendingHashRef = useRef(false);
   const logoWrapRef = useRef<HTMLDivElement | null>(null);
 
   const aboutCopy = useMemo(
@@ -35,7 +35,7 @@ I haven't done my job yet.
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [aboutOpen]);
+  }, [aboutOpen, setAboutOpen]);
 
   useEffect(() => {
     if (aboutOpen) return;
@@ -169,13 +169,8 @@ I haven't done my job yet.
 
         <div className="absolute bottom-8 right-0">
           <Navigation
-            onAboutClick={() => {
-              setAboutOpen((v) => {
-                const next = !v;
-                if (next) pendingHashRef.current = true;
-                return next;
-              });
-            }}
+            aboutOpen={aboutOpen}
+            onAboutClick={() => setAboutOpen((v) => !v)}
           />
         </div>
       </div>
@@ -183,7 +178,7 @@ I haven't done my job yet.
       <div
         aria-hidden={!aboutOpen}
         className={[
-          "fixed inset-0 z-40 bg-[#0b1722]",
+          "absolute inset-0 z-40 bg-[#0b1722]",
           "transform-gpu",
           aboutOpen ? "translate-x-0" : "translate-x-full",
           "transition-transform motion-reduce:transition-none",
@@ -192,20 +187,19 @@ I haven't done my job yet.
         ].join(" ")}
         onTransitionEnd={(e) => {
           if (e.propertyName !== "transform") return;
-          if (!aboutOpen) return;
-          if (pendingHashRef.current) {
-            pendingHashRef.current = false;
-            // App Router doesn't reliably "navigate" for hash-only changes.
-            // Using History API guarantees URL becomes `/#about` without reload.
-            const base =
-              typeof window !== "undefined"
-                ? `${window.location.pathname}${window.location.search}`
-                : "/";
-            window.history.replaceState(null, "", `${base}#about`);
+          if (typeof window === "undefined") return;
+          const base = `${window.location.pathname}${window.location.search}`;
+          if (aboutOpen) {
+            // Slide-in finished — reflect the route as #about.
+            if (window.location.hash !== "#about") {
+              window.history.replaceState(null, "", `${base}#about`);
+            }
+          } else if (window.location.hash === "#about") {
+            // Slide-out finished after closing about (HOME click).
+            window.history.replaceState(null, "", base || "/");
           }
         }}
       />
     </section>
   );
 }
-

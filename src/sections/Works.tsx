@@ -24,6 +24,15 @@ const imageByCompany: Record<string, string> = {
   "River AI": "/river.png",
 };
 
+const beachBackgrounds = [
+  "/beach1.png",
+  "/beach2.png",
+  "/beach3.png",
+  "/beach4.png",
+  "/beach5.png",
+  "/beach6.png",
+];
+
 function renderDescription(work: Work) {
   const idx = work.description.indexOf(" ,");
   if (idx === -1) return work.description;
@@ -111,22 +120,50 @@ export default function Works() {
             {works.map((work, index) => {
               const src = imageByCompany[work.company];
               if (!src) return null;
+              const beachSrc =
+                beachBackgrounds[index % beachBackgrounds.length];
               const isActive = index === activeIndex;
               return (
-                <Image
+                <div
                   key={work.company}
-                  src={src}
-                  alt={`${work.company} — ${work.designation}`}
-                  fill
-                  priority={index === 0}
-                  sizes="(max-width: 768px) 80vw, 460px"
+                  aria-hidden={!isActive}
                   className={[
-                    "object-cover transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
+                    "absolute inset-0 transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
                     isActive
                       ? "opacity-100 scale-100"
                       : "opacity-0 scale-[1.04]",
                   ].join(" ")}
-                />
+                >
+                  <Image
+                    src={beachSrc}
+                    alt=""
+                    aria-hidden="true"
+                    fill
+                    priority={index === 0}
+                    sizes="(max-width: 768px) 80vw, 460px"
+                    className="object-cover"
+                    style={{
+                      filter:
+                        "blur(2px) brightness(0.78) saturate(0.7) contrast(0.95)",
+                    }}
+                  />
+                  <div
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "linear-gradient(180deg, rgba(11,23,34,0.18) 0%, rgba(11,23,34,0.28) 100%)",
+                    }}
+                  />
+
+                  <Image
+                    src={src}
+                    alt={`${work.company} — ${work.designation}`}
+                    fill
+                    priority={index === 0}
+                    sizes="(max-width: 768px) 80vw, 460px"
+                    className="object-contain p-6 md:p-8"
+                  />
+                </div>
               );
             })}
 

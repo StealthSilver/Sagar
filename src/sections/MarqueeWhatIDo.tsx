@@ -5,11 +5,19 @@ import { useId } from "react";
 type MarqueeWhatIDoProps = {
   text?: string;
   speedSeconds?: number;
+  /**
+   * Optional DOM id for the section. Defaults to "what-i-create".
+   * Pass `null` to render without an id (used when this component is
+   * rendered inside the works-reveal overlay so we don't end up with two
+   * elements that share the same id in the document).
+   */
+  sectionId?: string | null;
 };
 
 export default function MarqueeWhatIDo({
   text = "WHAT I CREATE",
   speedSeconds = 22,
+  sectionId = "what-i-create",
 }: MarqueeWhatIDoProps) {
   const labelId = useId();
   const repeatCount = 10;
@@ -22,7 +30,7 @@ export default function MarqueeWhatIDo({
 
   return (
     <section
-      id="what-i-create"
+      {...(sectionId ? { id: sectionId } : {})}
       aria-labelledby={labelId}
       className="w-full overflow-hidden bg-[#f9f6eb]"
     >
