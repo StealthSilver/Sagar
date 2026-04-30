@@ -97,37 +97,39 @@ export default function SagarLogo({
           aria-hidden={!secondaryActive}
         >
           <span className="overflow-hidden">
-            <span
-              className={[
-                "sagar-logo__line",
-                "block",
-                "transition-[transform,opacity] motion-reduce:transition-none",
-                "duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
-                secondaryActive
-                  ? "translate-y-0 opacity-100"
-                  : "-translate-y-3 opacity-0",
-              ].join(" ")}
-            >
-              <span
-                className={["sagar-logo__text", textClassName]
-                  .filter(Boolean)
-                  .join(" ")}
-              >
-                {secondaryText}
-              </span>
+            {secondaryText ? (
               <span
                 className={[
-                  "sagar-logo__text",
-                  "sagar-logo__text--ocean",
-                  textClassName,
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                aria-hidden="true"
+                  "sagar-logo__line",
+                  "block",
+                  "transition-[transform,opacity] motion-reduce:transition-none",
+                  "duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
+                  secondaryActive
+                    ? "translate-y-0 opacity-100"
+                    : "-translate-y-3 opacity-0",
+                ].join(" ")}
               >
-                {secondaryText}
+                <span
+                  className={["sagar-logo__text", textClassName]
+                    .filter(Boolean)
+                    .join(" ")}
+                >
+                  {secondaryText}
+                </span>
+                <span
+                  className={[
+                    "sagar-logo__text",
+                    "sagar-logo__text--ocean",
+                    textClassName,
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                  aria-hidden="true"
+                >
+                  {secondaryText}
+                </span>
               </span>
-            </span>
+            ) : null}
           </span>
         </span>
       ) : null}

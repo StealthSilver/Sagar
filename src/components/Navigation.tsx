@@ -41,7 +41,7 @@ export default function Navigation({ onAboutClick }: Props) {
                   "before:transition-transform before:duration-300 before:ease-out",
                   "hover:before:scale-x-100",
                   "focus-visible:before:scale-x-100",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E7CB1]/60 focus-visible:ring-offset-4 focus-visible:ring-offset-[#12263a]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E7CB1]/60 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0b1722]",
                 ].join(" ")}
               >
                 {item.label}
@@ -64,7 +64,7 @@ export default function Navigation({ onAboutClick }: Props) {
                   "before:transition-transform before:duration-300 before:ease-out",
                   "hover:before:scale-x-100",
                   "focus-visible:before:scale-x-100",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E7CB1]/60 focus-visible:ring-offset-4 focus-visible:ring-offset-[#12263a]",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3E7CB1]/60 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0b1722]",
                 ].join(" ")}
               >
                 {item.label}

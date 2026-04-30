@@ -20,7 +20,7 @@ export default function Hero() {
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-[#f9f6eb]">
       <div
-        className="absolute inset-y-0 right-0 w-[30%] bg-[#12263a]"
+        className="absolute inset-y-0 right-0 w-[25%] bg-[#0b1722]"
         style={{
           boxShadow: "-28px 0 64px rgba(18, 38, 58, 0.55)",
         }}
@@ -44,6 +44,25 @@ export default function Hero() {
           ].join(" ")}
         />
 
+        <div className="absolute left-6 top-1/2 -translate-y-1/2 font-satoshi text-black">
+          <div className="text-[clamp(16px,1.7vw,22px)] font-medium leading-tight">
+            crafting
+          </div>
+          <div className="mt-1 text-[clamp(34px,4vw,54px)] font-black leading-[1.02] tracking-[-0.02em]">
+            DIGITAL WORLDS
+          </div>
+          <div className="mt-2 text-[clamp(16px,1.7vw,22px)] font-medium leading-tight">
+            for the
+          </div>
+          <div className="mt-1 whitespace-nowrap text-[clamp(34px,4vw,54px)] font-black leading-[1.02] tracking-[-0.02em]">
+            BRANDS OF TOMORROW
+          </div>
+        </div>
+
+        <div className="pointer-events-none absolute bottom-12 left-6 font-satoshi text-[clamp(13px,1.2vw,16px)] font-light uppercase tracking-[0.08em] text-black/60">
+          Digital Content Manager based in Bengaluru.
+        </div>
+
         <div className="absolute bottom-8 right-0">
           <Navigation
             onAboutClick={() => {
@@ -60,7 +79,7 @@ export default function Hero() {
       <div
         aria-hidden={!aboutOpen}
         className={[
-          "fixed inset-0 z-40 bg-[#12263a]",
+          "fixed inset-0 z-40 bg-[#0b1722]",
           "transform-gpu",
           aboutOpen ? "translate-x-0" : "translate-x-full",
           "transition-transform motion-reduce:transition-none",
