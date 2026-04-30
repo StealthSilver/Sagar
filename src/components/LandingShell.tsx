@@ -5,6 +5,7 @@ import Hero from "@/sections/Hero";
 import Works from "@/sections/Works";
 import CTA from "@/sections/CTA";
 import Footer from "@/sections/Footer";
+import PageLoader from "@/components/PageLoader";
 import { LandingContext } from "@/state/landing";
 
 export default function LandingShell() {
@@ -114,11 +115,14 @@ export default function LandingShell() {
   }, [aboutOpen]);
 
   return (
-    <LandingContext.Provider value={{ aboutOpen, setAboutOpen }}>
-      <Hero />
-      <Works />
-      <CTA />
-      <Footer />
-    </LandingContext.Provider>
+    <>
+      <PageLoader />
+      <LandingContext.Provider value={{ aboutOpen, setAboutOpen }}>
+        <Hero />
+        <Works />
+        <CTA />
+        <Footer />
+      </LandingContext.Provider>
+    </>
   );
 }
