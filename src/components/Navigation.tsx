@@ -54,7 +54,7 @@ export default function Navigation({ onAboutClick, aboutOpen = false }: Props) {
 
   const linkClasses = [
     satoshi.className,
-    "text-sm sm:text-lg md:text-xl",
+    "text-xs sm:text-lg md:text-xl",
     "uppercase tracking-[0.16em] sm:tracking-[0.18em]",
     "text-[#3E7CB1]",
     "relative inline-block",
@@ -71,7 +71,7 @@ export default function Navigation({ onAboutClick, aboutOpen = false }: Props) {
 
   return (
     <nav aria-label="Primary">
-      <ul className="flex flex-col items-end gap-3 sm:gap-5">
+      <ul className="flex flex-col items-end gap-2 sm:gap-5">
         {items.map((item) => {
           if (item.label === "ABOUT") {
             const label = aboutOpen ? "HOME" : "ABOUT";
