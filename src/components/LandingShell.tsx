@@ -149,7 +149,13 @@ export default function LandingShell() {
             worksOverlayCovering ? "translate-x-0" : "-translate-x-full",
           ].join(" ")}
           onTransitionEnd={(e) => {
-            if (e.propertyName !== "transform") return;
+            // Tailwind v4 emits `propertyName === "translate"` for
+            // `translate-x-*` utilities. Accept either name so the reveal
+            // actually settles on browsers using the new CSS `translate`
+            // property.
+            if (e.propertyName !== "transform" && e.propertyName !== "translate")
+              return;
+            if (e.target !== e.currentTarget) return;
             if (!worksOverlayCovering) return;
             settleWorksReveal();
           }}

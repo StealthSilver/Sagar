@@ -1,5 +1,6 @@
 "use client";
 
+import HangingPhoto from "@/components/HangingPhoto";
 import Navigation from "@/components/Navigation";
 import SagarLogo from "@/components/SagarLogo";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -173,6 +174,8 @@ I haven't done my job yet.
             onAboutClick={() => setAboutOpen((v) => !v)}
           />
         </div>
+
+        <HangingPhoto active={aboutOpen} />
       </div>
 
       <div
@@ -186,7 +189,13 @@ I haven't done my job yet.
           "ease-[cubic-bezier(0.16,1,0.3,1)]",
         ].join(" ")}
         onTransitionEnd={(e) => {
-          if (e.propertyName !== "transform") return;
+          // Tailwind v4 uses the `translate` CSS property (not `transform`)
+          // for `translate-x-*` utilities, so the transitionend event fires
+          // with propertyName === "translate". Accept either to stay
+          // forward-compatible.
+          if (e.propertyName !== "transform" && e.propertyName !== "translate")
+            return;
+          if (e.target !== e.currentTarget) return;
           if (typeof window === "undefined") return;
           const base = `${window.location.pathname}${window.location.search}`;
           if (aboutOpen) {
