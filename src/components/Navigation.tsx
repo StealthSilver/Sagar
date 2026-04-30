@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import type { MouseEvent } from "react";
 import { satoshi } from "@/fonts/satoshi";
 
 type NavItem = { label: string; href: string };
@@ -17,6 +18,23 @@ type Props = {
 };
 
 export default function Navigation({ onAboutClick }: Props) {
+  const onWorksClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+
+    const worksSection = document.getElementById("works");
+    if (!worksSection) return;
+
+    const marqueeSection =
+      document.getElementById("what-i-create") ?? worksSection;
+    const targetTop = window.scrollY + marqueeSection.getBoundingClientRect().top;
+
+    window.history.replaceState(null, "", "#works");
+    window.scrollTo({
+      top: Math.max(0, targetTop),
+      behavior: "smooth",
+    });
+  };
+
   return (
     <nav aria-label="Primary">
       <ul className="flex flex-col items-end gap-4 sm:gap-5">
@@ -49,6 +67,7 @@ export default function Navigation({ onAboutClick }: Props) {
             ) : (
               <Link
                 href={item.href}
+                onClick={item.href === "#works" ? onWorksClick : undefined}
                 className={[
                   satoshi.className,
                   "text-base sm:text-lg md:text-xl",

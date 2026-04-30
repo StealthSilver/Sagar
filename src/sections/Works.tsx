@@ -1,127 +1,237 @@
+"use client";
+
+import Image from "next/image";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import MarqueeWhatIDo from "@/sections/MarqueeWhatIDo";
+import worksData from "@/data/works.data.json";
+
+type Work = {
+  company: string;
+  designation: string;
+  dates: string;
+  city: string;
+  description: string;
+};
+
+const works = worksData as Work[];
+
+const imageByCompany: Record<string, string> = {
+  "Lavender.ai": "/lavender.png",
+  Comet: "/comet.png",
+  Atomberg: "/atomberg.png",
+  "Campus Clash India": "/campus%20clash.png",
+  "The Fifth Estate": "/fifth%20estate.png",
+  "River AI": "/river.png",
+};
+
+function renderDescription(work: Work) {
+  const idx = work.description.indexOf(" ,");
+  if (idx === -1) return work.description;
+  const before = work.description.slice(0, idx);
+  const after = work.description.slice(idx + 1);
+  return (
+    <>
+      {before}{" "}
+      <span className="font-bold text-black">{work.company}</span>
+      {after}
+    </>
+  );
+}
+
 export default function Works() {
-  const works = [
-    {
-      title: "Brand Story Microsite",
-      role: "Content + Creative Direction",
-      year: "2026",
-      tags: ["Strategy", "Copy", "Motion"],
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const total = works.length;
+
+  const computeIndexFromScroll = useCallback(() => {
+    const section = sectionRef.current;
+    if (!section) return 0;
+    const rect = section.getBoundingClientRect();
+    const maxTravel = Math.max(1, section.offsetHeight - window.innerHeight);
+    const progress = Math.min(1, Math.max(0, -rect.top / maxTravel));
+    return Math.min(total - 1, Math.floor(progress * total + 0.0001));
+  }, [total]);
+
+  useEffect(() => {
+    const update = () => setActiveIndex(computeIndexFromScroll());
+    update();
+
+    let rafId = 0;
+    const onScrollOrResize = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
+        update();
+        rafId = 0;
+      });
+    };
+
+    window.addEventListener("scroll", onScrollOrResize, { passive: true });
+    window.addEventListener("resize", onScrollOrResize);
+    return () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", onScrollOrResize);
+      window.removeEventListener("resize", onScrollOrResize);
+    };
+  }, [computeIndexFromScroll]);
+
+  const scrollToIndex = useCallback(
+    (index: number) => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const sectionTop = window.scrollY + section.getBoundingClientRect().top;
+      const maxTravel = Math.max(1, section.offsetHeight - window.innerHeight);
+      // Aim for the middle of the chunk for the requested index.
+      const targetProgress = (index + 0.5) / total;
+      const top = sectionTop + targetProgress * maxTravel;
+      window.scrollTo({ top, behavior: "smooth" });
     },
-    {
-      title: "Campaign Content System",
-      role: "Digital Content Manager",
-      year: "2025",
-      tags: ["Content Ops", "Social", "Guidelines"],
-    },
-    {
-      title: "Launch Narrative & Visuals",
-      role: "Creative Producer",
-      year: "2025",
-      tags: ["Narrative", "Design", "Production"],
-    },
-  ] as const;
+    [total],
+  );
+
+  const activeWork = works[activeIndex];
+
+  const counter = useMemo(
+    () =>
+      `${String(activeIndex + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}`,
+    [activeIndex, total],
+  );
 
   return (
-    <section id="works" className="relative w-full overflow-hidden bg-[#f9f6eb]">
-      <div
-        className="absolute inset-y-0 left-0 w-[10%] bg-[#0b1722]/[0.06]"
-        aria-hidden="true"
-      />
+    <section
+      ref={sectionRef}
+      id="works"
+      className="relative w-full bg-[#f9f6eb]"
+      style={{ minHeight: `${total * 100}vh` }}
+    >
+      <div className="sticky top-0 h-screen w-full overflow-hidden">
+        <MarqueeWhatIDo />
 
-      <div className="relative mx-auto max-w-7xl px-6 py-20 sm:py-24">
-        <div className="flex items-end justify-between gap-8">
-          <div>
-            <div className="font-satoshi text-xs uppercase tracking-[0.28em] text-black/55">
+        <div className="relative mx-auto flex h-[calc(100vh-96px)] w-full max-w-7xl items-center gap-10 px-6 pb-10 pt-6 md:gap-14">
+          <div className="relative aspect-[4/5] w-[42%] max-w-[460px] shrink-0 overflow-hidden rounded-2xl border border-black/10 bg-black/5 shadow-[0_30px_60px_-20px_rgba(11,23,34,0.35)]">
+            {works.map((work, index) => {
+              const src = imageByCompany[work.company];
+              if (!src) return null;
+              const isActive = index === activeIndex;
+              return (
+                <Image
+                  key={work.company}
+                  src={src}
+                  alt={`${work.company} — ${work.designation}`}
+                  fill
+                  priority={index === 0}
+                  sizes="(max-width: 768px) 80vw, 460px"
+                  className={[
+                    "object-cover transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
+                    isActive
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-[1.04]",
+                  ].join(" ")}
+                />
+              );
+            })}
+
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-black/0" />
+
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
+              <span className="rounded-full bg-black/70 px-3 py-1 font-satoshi text-[10px] font-medium uppercase tracking-[0.22em] text-white backdrop-blur-sm">
+                {counter}
+              </span>
+              <span className="rounded-full bg-white/85 px-3 py-1 font-satoshi text-[10px] font-medium uppercase tracking-[0.22em] text-black backdrop-blur-sm">
+                {activeWork.city || "—"}
+              </span>
+            </div>
+          </div>
+
+          <div className="relative grid min-w-0 flex-1">
+            <div className="col-start-1 row-start-1 self-start font-satoshi text-xs uppercase tracking-[0.28em] text-black/55">
               Selected works
             </div>
-            <h2 className="mt-4 font-satoshi text-[clamp(28px,3.2vw,44px)] font-black leading-[1.04] tracking-[-0.02em] text-black">
-              Minimal outputs,
-              <span className="text-[#3E7CB1]"> maximum signal</span>.
-            </h2>
+
+            {works.map((work, index) => {
+              const isActive = index === activeIndex;
+              return (
+                <article
+                  key={work.company}
+                  aria-hidden={!isActive}
+                  className={[
+                    "col-start-1 row-start-1 pt-8",
+                    "transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
+                    isActive
+                      ? "opacity-100 translate-y-0 pointer-events-auto"
+                      : "opacity-0 translate-y-3 pointer-events-none",
+                  ].join(" ")}
+                >
+                  <h3 className="font-satoshi text-[clamp(36px,4.6vw,64px)] font-black leading-[1] tracking-[-0.02em] text-black">
+                    {work.company}
+                  </h3>
+
+                  <div className="mt-4 font-satoshi text-[clamp(15px,1.15vw,18px)] font-semibold text-[#3E7CB1]">
+                    {work.designation}
+                  </div>
+
+                  <div className="mt-2 font-satoshi text-[11px] uppercase tracking-[0.22em] text-black/50">
+                    {[work.dates, work.city].filter(Boolean).join(" — ") || "Selected engagement"}
+                  </div>
+
+                  <div className="mt-6 h-px w-16 bg-black/20" />
+
+                  <p className="mt-6 max-w-[58ch] font-satoshi text-[clamp(14px,1.05vw,16px)] leading-[1.7] text-black/75">
+                    {renderDescription(work)}
+                  </p>
+                </article>
+              );
+            })}
           </div>
 
-          <div className="hidden sm:block font-satoshi text-sm uppercase tracking-[0.22em] text-black/50">
-            03 pieces
-          </div>
-        </div>
-
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {works.map((work) => (
-            <article
-              key={work.title}
-              className={[
-                "group rounded-2xl border border-black/10 bg-white/55 p-6",
-                "backdrop-blur-sm",
-                "transition-transform duration-300 ease-out motion-reduce:transition-none",
-                "hover:-translate-y-1",
-              ].join(" ")}
-            >
-              <div className="flex items-start justify-between gap-3">
-                <h3 className="font-satoshi text-lg font-black tracking-[-0.01em] text-black">
-                  {work.title}
-                </h3>
-                <div className="font-satoshi text-xs font-medium uppercase tracking-[0.18em] text-black/45">
-                  {work.year}
-                </div>
-              </div>
-
-              <div className="mt-2 font-satoshi text-sm font-medium text-black/60">
-                {work.role}
-              </div>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                {work.tags.map((tag) => (
-                  <span
-                    key={tag}
+          <aside
+            aria-label="Works progression"
+            className="hidden min-w-12 items-center justify-end pr-1 md:flex"
+          >
+            <div className="flex flex-col gap-3">
+              {works.map((work, index) => {
+                const isActive = index === activeIndex;
+                const reached = index <= activeIndex;
+                return (
+                  <button
+                    key={work.company}
+                    type="button"
+                    onClick={() => scrollToIndex(index)}
+                    aria-label={`View ${work.company}`}
+                    aria-current={isActive ? "true" : undefined}
                     className={[
-                      "inline-flex items-center rounded-full px-3 py-1",
-                      "border border-[#3E7CB1]/30 bg-[#3E7CB1]/[0.06]",
-                      "font-satoshi text-xs font-medium uppercase tracking-[0.16em]",
-                      "text-[#2b6fa6]",
+                      "group relative flex items-center justify-end",
+                      "py-1.5 cursor-pointer",
+                      "focus-visible:outline-none",
                     ].join(" ")}
                   >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-8 h-px w-full bg-gradient-to-r from-black/10 via-black/5 to-transparent" />
-
-              <div className="mt-4 flex items-center justify-between">
-                <div className="font-satoshi text-xs uppercase tracking-[0.22em] text-black/45">
-                  View case
-                </div>
-                <div
-                  className={[
-                    "h-10 w-10 rounded-full border border-black/10 bg-white/65",
-                    "grid place-items-center",
-                    "transition-colors duration-300 ease-out motion-reduce:transition-none",
-                    "group-hover:border-[#3E7CB1]/40 group-hover:bg-[#3E7CB1]/[0.08]",
-                  ].join(" ")}
-                  aria-hidden="true"
-                >
-                  <span className="text-[#0b1722] group-hover:text-[#3E7CB1]">
-                    ↗
-                  </span>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        <div className="mt-10">
-          <div className="font-satoshi text-sm text-black/60">
-            Want the full list?{" "}
-            <a
-              href="#contact"
-              className="font-black text-[#3E7CB1] underline decoration-[#3E7CB1]/40 underline-offset-4 hover:decoration-[#3E7CB1]"
-            >
-              Let’s talk
-            </a>
-            .
-          </div>
+                    <span
+                      className={[
+                        "pointer-events-none absolute right-[calc(100%+12px)] top-1/2 -translate-y-1/2 whitespace-nowrap",
+                        "rounded-md bg-black/85 px-2.5 py-1 font-satoshi text-[10px] uppercase tracking-[0.18em] text-white",
+                        "opacity-0 translate-x-1 transition-all duration-200 ease-out",
+                        "group-hover:opacity-100 group-hover:translate-x-0",
+                        "group-focus-visible:opacity-100 group-focus-visible:translate-x-0",
+                      ].join(" ")}
+                    >
+                      {work.company}
+                    </span>
+                    <span
+                      className={[
+                        "block h-[2px] rounded-full transition-all duration-300 ease-out",
+                        isActive
+                          ? "w-20 bg-[#0b1722]"
+                          : reached
+                            ? "w-14 bg-[#0b1722]/70 group-hover:w-16"
+                            : "w-10 bg-[#0b1722]/30 group-hover:w-14 group-hover:bg-[#0b1722]/55",
+                      ].join(" ")}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </aside>
         </div>
       </div>
     </section>
   );
 }
-

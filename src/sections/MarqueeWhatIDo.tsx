@@ -22,6 +22,7 @@ export default function MarqueeWhatIDo({
 
   return (
     <section
+      id="what-i-create"
       aria-labelledby={labelId}
       className="w-full overflow-hidden bg-[#f9f6eb]"
     >
