@@ -82,8 +82,8 @@ function IconInstagram(props: { className?: string }) {
 export default function Footer() {
   return (
     <footer className="w-full">
-      <div className="flex h-[100vh] w-full flex-col">
-        <div className="relative h-1/2 w-full overflow-hidden bg-[#0b1722]">
+      <div className="flex min-h-screen w-full flex-col md:h-[100vh]">
+        <div className="relative h-[42vh] w-full overflow-hidden bg-[#0b1722] md:h-1/2">
           <Image
             src="/footer.png"
             alt=""
@@ -125,10 +125,10 @@ export default function Footer() {
           />
 
           <div className="absolute inset-0">
-            <div className="mx-auto h-full max-w-7xl px-6">
+            <div className="mx-auto h-full max-w-7xl px-5 sm:px-6">
               <div className="relative h-full w-full">
-                <div className="absolute left-0 top-8 sm:top-10">
-                  <div className="max-w-[26ch] text-left font-satoshi text-[clamp(32px,3.6vw,56px)] italic font-light leading-snug tracking-[-0.01em] text-[#f9f6eb]/90">
+                <div className="absolute left-0 top-6 sm:top-10">
+                  <div className="max-w-[18ch] text-left font-satoshi text-[clamp(26px,7.4vw,56px)] italic font-light leading-snug tracking-[-0.01em] text-[#f9f6eb]/90 sm:max-w-[26ch]">
                     Because good enough
                     <br />
                     is not that good
@@ -139,34 +139,36 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex h-1/2 w-full flex-col bg-[#f9f6eb] text-black">
-          <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-6 pt-8 sm:pt-10">
-            <div className="flex flex-col gap-8">
+        <div className="flex w-full flex-1 flex-col bg-[#f9f6eb] text-black md:h-1/2 md:flex-none">
+          <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col px-5 pt-8 sm:px-6 sm:pt-10">
+            <div className="flex flex-col gap-6 sm:gap-8">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div className="mt-2">
-                  <SagarLogo
-                    textClassName={[
-                      "font-sekuya",
-                      "font-black",
-                      "text-[clamp(34px,4.2vw,56px)]",
-                      "leading-[1] tracking-[-0.01em]",
-                    ].join(" ")}
-                    secondaryText="MISHRA"
-                    secondaryActive={false}
-                    className="text-black"
-                  />
+                  <Link href="/" aria-label="Go to home">
+                    <SagarLogo
+                      textClassName={[
+                        "font-sekuya",
+                        "font-black",
+                        "text-[clamp(30px,9vw,56px)]",
+                        "leading-[1] tracking-[-0.01em]",
+                      ].join(" ")}
+                      secondaryText="MISHRA"
+                      secondaryActive={false}
+                      className="text-black"
+                    />
+                  </Link>
                 </div>
 
-                <div className="mt-2 flex items-start sm:items-start">
+                <div className="mt-1 flex items-start sm:mt-2 sm:items-start">
                   <div className="flex flex-col items-start gap-3">
-                    <div className="flex flex-row gap-3">
+                    <div className="flex flex-row gap-2.5 sm:gap-3">
                     <Link
                       href="mailto:sagarmishra4132@gmail.com"
                       target="_blank"
                       rel="noreferrer"
                       aria-label="Email"
                       className={[
-                        "group inline-flex h-11 w-11 items-center justify-center rounded-[10px]",
+                        "group inline-flex h-9 w-9 items-center justify-center rounded-[10px] sm:h-11 sm:w-11",
                         "border border-black/20 bg-black/[0.03]",
                         "text-black/80",
                         "transition-colors duration-300 ease-out motion-reduce:transition-none",
@@ -174,7 +176,7 @@ export default function Footer() {
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/35 focus-visible:ring-offset-4 focus-visible:ring-offset-[#f9f6eb]",
                       ].join(" ")}
                     >
-                      <IconMail className="h-[20px] w-[20px]" />
+                      <IconMail className="h-[16px] w-[16px] sm:h-[20px] sm:w-[20px]" />
                     </Link>
 
                     <Link
@@ -183,7 +185,7 @@ export default function Footer() {
                       rel="noreferrer"
                       aria-label="X"
                       className={[
-                        "group inline-flex h-11 w-11 items-center justify-center rounded-[10px]",
+                        "group inline-flex h-9 w-9 items-center justify-center rounded-[10px] sm:h-11 sm:w-11",
                         "border border-black/20 bg-black/[0.03]",
                         "text-black/80",
                         "transition-colors duration-300 ease-out motion-reduce:transition-none",
@@ -191,7 +193,7 @@ export default function Footer() {
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/35 focus-visible:ring-offset-4 focus-visible:ring-offset-[#f9f6eb]",
                       ].join(" ")}
                     >
-                      <FaXTwitter className="h-[18px] w-[18px]" aria-hidden="true" />
+                      <FaXTwitter className="h-[15px] w-[15px] sm:h-[18px] sm:w-[18px]" aria-hidden="true" />
                     </Link>
 
                     <Link
@@ -200,7 +202,7 @@ export default function Footer() {
                       rel="noreferrer"
                       aria-label="LinkedIn"
                       className={[
-                        "group inline-flex h-11 w-11 items-center justify-center rounded-[10px]",
+                        "group inline-flex h-9 w-9 items-center justify-center rounded-[10px] sm:h-11 sm:w-11",
                         "border border-black/20 bg-black/[0.03]",
                         "text-black/80",
                         "transition-colors duration-300 ease-out motion-reduce:transition-none",
@@ -208,7 +210,7 @@ export default function Footer() {
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/35 focus-visible:ring-offset-4 focus-visible:ring-offset-[#f9f6eb]",
                       ].join(" ")}
                     >
-                      <IconLinkedIn className="h-[20px] w-[20px]" />
+                      <IconLinkedIn className="h-[16px] w-[16px] sm:h-[20px] sm:w-[20px]" />
                     </Link>
 
                     <Link
@@ -217,7 +219,7 @@ export default function Footer() {
                       rel="noreferrer"
                       aria-label="Instagram"
                       className={[
-                        "group inline-flex h-11 w-11 items-center justify-center rounded-[10px]",
+                        "group inline-flex h-9 w-9 items-center justify-center rounded-[10px] sm:h-11 sm:w-11",
                         "border border-black/20 bg-black/[0.03]",
                         "text-black/80",
                         "transition-colors duration-300 ease-out motion-reduce:transition-none",
@@ -225,11 +227,11 @@ export default function Footer() {
                         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/35 focus-visible:ring-offset-4 focus-visible:ring-offset-[#f9f6eb]",
                       ].join(" ")}
                     >
-                      <IconInstagram className="h-[20px] w-[20px]" />
+                      <IconInstagram className="h-[16px] w-[16px] sm:h-[20px] sm:w-[20px]" />
                     </Link>
                     </div>
 
-                    <div className="font-satoshi text-[11px] font-light uppercase tracking-[0.16em] text-black/65">
+                    <div className="font-satoshi text-[10px] font-light uppercase tracking-[0.14em] text-black/65 sm:text-[11px] sm:tracking-[0.16em]">
                       BASED IN BENGALURU
                     </div>
                   </div>
@@ -237,18 +239,18 @@ export default function Footer() {
               </div>
 
               <div>
-                <div className="max-w-md font-satoshi text-[15px] leading-relaxed text-black/70">
+                <div className="max-w-md font-satoshi text-[13px] leading-relaxed text-black/70 sm:text-[15px]">
                   Open to content-led design, campaigns, and creative systems
                   from first idea to final rollout.
                 </div>
 
-                <div className="mt-7 flex flex-wrap gap-3">
+                <div className="mt-5 flex flex-wrap gap-3 sm:mt-7">
                   <a
                     href="#works"
                     className={[
-                      "inline-flex w-fit items-center justify-center rounded-[8px] px-6 py-3",
+                      "inline-flex w-fit items-center justify-center rounded-[8px] px-5 py-2.5 sm:px-6 sm:py-3",
                       "border border-black/20 bg-black/[0.03]",
-                      "font-satoshi text-sm font-black uppercase tracking-[0.18em]",
+                      "font-satoshi text-xs font-black uppercase tracking-[0.16em] sm:text-sm sm:tracking-[0.18em]",
                       "text-black/90",
                       "transition-colors duration-300 ease-out motion-reduce:transition-none",
                       "hover:bg-black/[0.06] hover:border-black/30",
@@ -263,14 +265,14 @@ export default function Footer() {
           </div>
 
           {/* Full-bleed divider above the copyright row */}
-          <div className="h-px w-full bg-black/25" aria-hidden="true" />
+          <div className="mt-8 h-px w-full bg-black/25 sm:mt-0" aria-hidden="true" />
 
-          <div className="mx-auto w-full max-w-7xl px-6 pb-3 pt-4 sm:pb-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-              <div className="font-satoshi text-xs uppercase tracking-[0.22em] text-black/70">
+          <div className="mx-auto w-full max-w-7xl px-5 pb-4 pt-3 sm:px-6 sm:pb-4 sm:pt-4">
+            <div className="flex flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-0">
+              <div className="font-satoshi text-[10px] uppercase tracking-[0.18em] text-black/70 sm:text-xs sm:tracking-[0.22em]">
                 © {new Date().getFullYear()} Sagar Mishra
               </div>
-              <div className="font-satoshi text-xs uppercase tracking-[0.22em] text-black/70">
+              <div className="font-satoshi text-[10px] uppercase tracking-[0.18em] text-black/70 sm:text-xs sm:tracking-[0.22em]">
                 An Indie Digital Designer
               </div>
             </div>

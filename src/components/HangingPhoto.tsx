@@ -181,6 +181,7 @@ export default function HangingPhoto({ active }: Props) {
     <div
       className={[
         "pointer-events-none absolute z-[55]",
+        "hidden md:block",
         "transition-opacity duration-500 ease-out motion-reduce:transition-none",
         mounted ? "opacity-100" : "opacity-0",
       ].join(" ")}

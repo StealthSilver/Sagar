@@ -4,28 +4,28 @@ import { MaskContainer } from "@/components/ui/svg-mask-effect";
 export default function CTA() {
   const buildCtaText = (textClassName: string) => (
     <>
-      <div className={`mb-28 flex justify-end text-right ${textClassName}`}>
+      <div className={`mb-12 flex justify-end text-right sm:mb-20 md:mb-28 ${textClassName}`}>
         <div>
-          <div className="whitespace-nowrap text-[clamp(34px,4vw,54px)] font-black leading-[1.02] tracking-[-0.02em]">
+          <div className="text-[clamp(28px,8vw,54px)] font-black leading-[1.02] tracking-[-0.02em] md:whitespace-nowrap">
             BRIDGING THE GAP
           </div>
-          <div className="mt-2 text-[clamp(16px,1.7vw,22px)] font-medium leading-tight">
+          <div className="mt-2 text-[clamp(14px,3.6vw,22px)] font-medium leading-tight">
             between
           </div>
-          <div className="mt-1 whitespace-nowrap text-[clamp(34px,4vw,54px)] font-black leading-[1.02] tracking-[-0.02em]">
+          <div className="mt-1 text-[clamp(28px,8vw,54px)] font-black leading-[1.02] tracking-[-0.02em] md:whitespace-nowrap">
             TECHNOLOGY & ARTISARY
           </div>
         </div>
       </div>
 
       <div className={`max-w-4xl font-satoshi ${textClassName}`}>
-        <div className="text-[clamp(34px,4vw,54px)] font-black leading-[1.02] tracking-[-0.02em] uppercase">
+        <div className="text-[clamp(28px,8vw,54px)] font-black leading-[1.02] tracking-[-0.02em] uppercase">
           Designing brands
         </div>
-        <div className="mt-2 text-[clamp(16px,1.7vw,22px)] font-medium leading-tight">
+        <div className="mt-2 text-[clamp(14px,3.6vw,22px)] font-medium leading-tight">
           that
         </div>
-        <div className="mt-1 text-[clamp(34px,4vw,54px)] font-black leading-[1.02] tracking-[-0.02em] uppercase">
+        <div className="mt-1 text-[clamp(28px,8vw,54px)] font-black leading-[1.02] tracking-[-0.02em] uppercase">
           Grow
         </div>
       </div>
@@ -37,7 +37,7 @@ export default function CTA() {
       id="contact"
       className="relative w-full overflow-hidden bg-[#0b1722]"
     >
-      <div className="relative mx-auto max-w-7xl px-6 pb-20 pt-28 sm:pb-24 sm:pt-32">
+      <div className="relative mx-auto max-w-7xl px-5 pb-16 pt-20 sm:px-6 sm:pb-24 sm:pt-32">
         <MaskContainer
           className="w-full"
           size={48}
@@ -47,13 +47,13 @@ export default function CTA() {
           {buildCtaText("text-white")}
         </MaskContainer>
 
-        <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
+        <div className="mt-8 flex flex-col gap-4 sm:mt-10 sm:flex-row sm:items-center">
           <Link
             href="mailto:hello@sagar.work"
             className={[
-              "inline-flex w-fit items-center justify-center rounded-[8px] px-6 py-3",
+              "inline-flex w-fit items-center justify-center rounded-[8px] px-5 py-3 sm:px-6",
               "border border-white/20 bg-white/[0.06] text-white/90",
-              "font-satoshi text-sm font-black uppercase tracking-[0.18em]",
+              "font-satoshi text-xs font-black uppercase tracking-[0.16em] sm:text-sm sm:tracking-[0.18em]",
               "transition-colors duration-300 ease-out motion-reduce:transition-none",
               "hover:bg-white/[0.10] hover:border-white/30 hover:text-white",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0b1722]",

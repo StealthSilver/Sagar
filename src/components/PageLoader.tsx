@@ -17,7 +17,7 @@ function Word({ text, sweep, baseDelay = 0 }: WordProps) {
   const letterClass =
     "inline-block translate-y-[0.55em] opacity-0 [animation:sagar-loader-letter-in_0.7s_cubic-bezier(0.16,1,0.3,1)_forwards] motion-reduce:translate-y-0 motion-reduce:opacity-100 motion-reduce:[animation:none]";
   const wordClass =
-    "block font-sekuya font-black tracking-[-0.02em] text-[clamp(64px,15vw,220px)] leading-[0.95]";
+    "block font-sekuya font-black tracking-[-0.02em] text-[clamp(56px,15vw,220px)] leading-[0.95]";
 
   return (
     <div className="relative inline-block">
@@ -148,7 +148,7 @@ export default function PageLoader() {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-y-0 right-0 w-[25%] bg-[#0b1722]/[0.04]"
+        className="pointer-events-none absolute inset-y-0 right-0 hidden w-[25%] bg-[#0b1722]/[0.04] md:block"
       />
       <div
         aria-hidden="true"
@@ -161,12 +161,12 @@ export default function PageLoader() {
 
       <div
         className={[
-          "relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col px-6 pt-8 pb-10",
+          "relative z-10 mx-auto flex min-h-screen max-w-7xl flex-col px-5 pt-6 pb-8 sm:px-6 sm:pt-8 sm:pb-10",
           "transition-opacity duration-300 ease-out motion-reduce:transition-none",
           exiting ? "opacity-0" : "opacity-100",
         ].join(" ")}
       >
-        <div className="flex items-start justify-between font-satoshi text-[11px] uppercase tracking-[0.24em] text-black/55">
+        <div className="flex items-start justify-between font-satoshi text-[10px] uppercase tracking-[0.2em] text-black/55 sm:text-[11px] sm:tracking-[0.24em]">
           <div className="flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#3E7CB1]" />
             <span>Sagar Mishra — Portfolio</span>
@@ -182,9 +182,9 @@ export default function PageLoader() {
 
           <div
             className={[
-              "mt-10 max-w-[52ch]",
+              "mt-6 max-w-[52ch] sm:mt-10",
               "font-satoshi italic font-extralight",
-              "text-[clamp(13px,1.05vw,16px)] leading-[1.65] tracking-[0.01em]",
+              "text-[clamp(12px,3.2vw,16px)] leading-[1.65] tracking-[0.01em]",
               "text-black/65",
               "opacity-0 [animation:sagar-loader-fade-in_0.7s_cubic-bezier(0.16,1,0.3,1)_forwards]",
               "motion-reduce:opacity-100 motion-reduce:[animation:none]",
@@ -197,8 +197,8 @@ export default function PageLoader() {
           </div>
         </div>
 
-        <div className="flex items-center gap-4 sm:gap-6">
-          <div className="flex items-center gap-2 font-satoshi text-[11px] uppercase tracking-[0.28em] text-black/60">
+        <div className="flex items-center gap-3 sm:gap-6">
+          <div className="flex items-center gap-2 font-satoshi text-[10px] uppercase tracking-[0.22em] text-black/60 sm:text-[11px] sm:tracking-[0.28em]">
             <span
               aria-hidden="true"
               className="inline-block h-1.5 w-1.5 rounded-full bg-[#0b1722] [animation:sagar-loader-pulse_1.4s_ease-in-out_infinite] motion-reduce:[animation:none]"
@@ -220,7 +220,7 @@ export default function PageLoader() {
             />
           </div>
 
-          <div className="font-satoshi text-[11px] uppercase tracking-[0.28em] text-black/60">
+          <div className="font-satoshi text-[10px] uppercase tracking-[0.22em] text-black/60 sm:text-[11px] sm:tracking-[0.28em]">
             <span className="tabular-nums text-[#0b1722]">{percentStr}</span>
             <span className="text-black/35"> / 100</span>
           </div>

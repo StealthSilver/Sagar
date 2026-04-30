@@ -112,11 +112,11 @@ export default function Works() {
       className="relative w-full bg-[#f9f6eb]"
       style={{ minHeight: `${total * 100}vh` }}
     >
-      <div className="sticky top-0 h-screen w-full overflow-hidden">
+      <div className="sticky top-0 flex h-screen w-full flex-col overflow-hidden">
         <MarqueeWhatIDo />
 
-        <div className="relative mx-auto flex h-[calc(100vh-96px)] w-full max-w-7xl items-center gap-10 px-6 pb-10 pt-6 md:gap-14">
-          <div className="relative aspect-[4/5] w-[42%] max-w-[460px] shrink-0 overflow-hidden rounded-2xl border border-black/10 bg-black/5 shadow-[0_30px_60px_-20px_rgba(11,23,34,0.35)]">
+        <div className="relative mx-auto flex w-full max-w-7xl flex-1 min-h-0 flex-col items-stretch gap-4 px-5 pb-6 pt-4 sm:px-6 sm:gap-6 md:flex-row md:items-center md:gap-10 md:pb-10 md:pt-6 lg:gap-14">
+          <div className="relative mx-auto aspect-[4/5] w-[58%] max-w-[200px] shrink-0 overflow-hidden rounded-2xl border border-black/10 bg-black/5 shadow-[0_30px_60px_-20px_rgba(11,23,34,0.35)] sm:w-[46%] sm:max-w-[260px] md:mx-0 md:w-[42%] md:max-w-[460px]">
             {works.map((work, index) => {
               const src = imageByCompany[work.company];
               if (!src) return null;
@@ -160,8 +160,8 @@ export default function Works() {
                     alt={`${work.company} — ${work.designation}`}
                     fill
                     priority={index === 0}
-                    sizes="(max-width: 768px) 80vw, 460px"
-                    className="object-contain p-6 md:p-8"
+                    sizes="(max-width: 768px) 60vw, 460px"
+                    className="object-contain p-4 sm:p-6 md:p-8"
                   />
                 </div>
               );
@@ -169,18 +169,18 @@ export default function Works() {
 
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/30 via-black/0 to-black/0" />
 
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
-              <span className="rounded-full bg-black/70 px-3 py-1 font-satoshi text-[10px] font-medium uppercase tracking-[0.22em] text-white backdrop-blur-sm">
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3 sm:gap-3 sm:p-5">
+              <span className="rounded-full bg-black/70 px-2.5 py-0.5 font-satoshi text-[9px] font-medium uppercase tracking-[0.2em] text-white backdrop-blur-sm sm:px-3 sm:py-1 sm:text-[10px] sm:tracking-[0.22em]">
                 {counter}
               </span>
-              <span className="rounded-full bg-white/85 px-3 py-1 font-satoshi text-[10px] font-medium uppercase tracking-[0.22em] text-black backdrop-blur-sm">
+              <span className="rounded-full bg-white/85 px-2.5 py-0.5 font-satoshi text-[9px] font-medium uppercase tracking-[0.2em] text-black backdrop-blur-sm sm:px-3 sm:py-1 sm:text-[10px] sm:tracking-[0.22em]">
                 {activeWork.city || "—"}
               </span>
             </div>
           </div>
 
-          <div className="relative grid min-w-0 flex-1">
-            <div className="col-start-1 row-start-1 self-start font-satoshi text-xs uppercase tracking-[0.28em] text-black/55">
+          <div className="relative grid min-w-0 flex-1 overflow-hidden">
+            <div className="col-start-1 row-start-1 self-start font-satoshi text-[10px] uppercase tracking-[0.24em] text-black/55 sm:text-xs sm:tracking-[0.28em]">
               Selected works
             </div>
 
@@ -191,28 +191,28 @@ export default function Works() {
                   key={work.company}
                   aria-hidden={!isActive}
                   className={[
-                    "col-start-1 row-start-1 pt-8",
+                    "col-start-1 row-start-1 pt-5 sm:pt-8",
                     "transition-[opacity,transform] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
                     isActive
                       ? "opacity-100 translate-y-0 pointer-events-auto"
                       : "opacity-0 translate-y-3 pointer-events-none",
                   ].join(" ")}
                 >
-                  <h3 className="font-satoshi text-[clamp(36px,4.6vw,64px)] font-black leading-[1] tracking-[-0.02em] text-black">
+                  <h3 className="font-satoshi text-[clamp(26px,7vw,64px)] font-black leading-[1] tracking-[-0.02em] text-black">
                     {work.company}
                   </h3>
 
-                  <div className="mt-4 font-satoshi text-[clamp(15px,1.15vw,18px)] font-semibold text-[#3E7CB1]">
+                  <div className="mt-2 font-satoshi text-[clamp(13px,3.4vw,18px)] font-semibold text-[#3E7CB1] sm:mt-4">
                     {work.designation}
                   </div>
 
-                  <div className="mt-2 font-satoshi text-[11px] uppercase tracking-[0.22em] text-black/50">
+                  <div className="mt-1.5 font-satoshi text-[10px] uppercase tracking-[0.18em] text-black/50 sm:mt-2 sm:text-[11px] sm:tracking-[0.22em]">
                     {[work.dates, work.city].filter(Boolean).join(" — ") || "Selected engagement"}
                   </div>
 
-                  <div className="mt-6 h-px w-16 bg-black/20" />
+                  <div className="mt-3 h-px w-12 bg-black/20 sm:mt-6 sm:w-16" />
 
-                  <p className="mt-6 max-w-[58ch] font-satoshi text-[clamp(14px,1.05vw,16px)] leading-[1.7] text-black/75">
+                  <p className="mt-3 max-w-[58ch] font-satoshi text-[clamp(12.5px,3.2vw,16px)] leading-[1.55] text-black/75 line-clamp-[7] sm:mt-6 sm:leading-[1.7] sm:line-clamp-none">
                     {renderDescription(work)}
                   </p>
                 </article>

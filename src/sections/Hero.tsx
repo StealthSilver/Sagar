@@ -3,6 +3,7 @@
 import HangingPhoto from "@/components/HangingPhoto";
 import Navigation from "@/components/Navigation";
 import SagarLogo from "@/components/SagarLogo";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLanding } from "@/state/landing";
 
@@ -86,7 +87,7 @@ I haven't done my job yet.
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-[#f9f6eb]">
       <div
-        className="absolute inset-y-0 right-0 w-[25%] bg-[#0b1722]"
+        className="absolute inset-y-0 right-0 hidden w-[25%] bg-[#0b1722] md:block"
         style={{
           boxShadow: "-28px 0 64px rgba(18, 38, 58, 0.55)",
         }}
@@ -94,40 +95,49 @@ I haven't done my job yet.
       />
 
       <div
-        className="relative z-50 mx-auto min-h-screen max-w-7xl px-6 pt-8"
+        className="relative z-50 mx-auto min-h-screen max-w-7xl px-5 pt-6 sm:px-6 sm:pt-8"
       >
-        <div ref={logoWrapRef} className="inline-block">
-          <SagarLogo
-            textClassName={[
-              "font-sekuya",
-              "font-black",
-              "text-[clamp(40px,6vw,88px)]",
-              "leading-[1] tracking-[-0.01em]",
-            ].join(" ")}
-            secondaryText="MISHRA"
-            secondaryActive={aboutOpen}
-            className={[
-              "relative z-50",
-              "transition-colors duration-300 ease-out motion-reduce:transition-none",
-              aboutOpen ? "text-white" : "text-black",
-            ].join(" ")}
-          />
+        <div ref={logoWrapRef} className="inline-block max-w-full">
+          <Link href="/" aria-label="Go to home">
+            <SagarLogo
+              textClassName={[
+                "font-sekuya",
+                "font-black",
+                "text-[clamp(48px,12vw,88px)]",
+                "leading-[1] tracking-[-0.01em]",
+              ].join(" ")}
+              secondaryText="MISHRA"
+              secondaryActive={aboutOpen}
+              className={[
+                "relative z-50",
+                "transition-colors duration-300 ease-out motion-reduce:transition-none",
+                aboutOpen ? "text-white" : "text-black",
+              ].join(" ")}
+            />
+          </Link>
 
           {aboutOpen ? (
             <div
               className={[
-                "mt-16",
+                "mt-6 sm:mt-10 md:mt-16",
                 "font-satoshi italic font-extralight",
-                "text-[clamp(13px,1.05vw,15px)] leading-[1.65] tracking-[0.01em]",
+                "text-[clamp(12.5px,3.4vw,15px)] leading-[1.65] tracking-[0.01em]",
                 "text-white/95",
                 "whitespace-pre-line",
                 "transition-[opacity,transform] motion-reduce:transition-none",
                 "duration-300 ease-out",
+                "w-full pr-1 md:w-[var(--mishra-w,auto)] md:pr-0",
                 aboutTextIn
                   ? "delay-400 opacity-100 translate-y-0"
                   : "delay-0 opacity-0 translate-y-2",
               ].join(" ")}
-              style={mishraWidth ? { width: mishraWidth } : undefined}
+              style={
+                mishraWidth
+                  ? ({
+                      ["--mishra-w" as unknown as string]: `${mishraWidth}px`,
+                    } as React.CSSProperties)
+                  : undefined
+              }
             >
               {aboutCopy}
             </div>
@@ -137,38 +147,41 @@ I haven't done my job yet.
         <div
           aria-hidden={aboutOpen}
           className={[
-            "absolute left-6 top-1/2 -translate-y-1/2 font-satoshi text-black",
+            "absolute left-5 right-5 top-1/2 -translate-y-1/2 font-satoshi text-black",
+            "sm:left-6 sm:right-6 md:right-auto",
             "transition-opacity duration-300 ease-out motion-reduce:transition-none",
             aboutOpen ? "pointer-events-none opacity-0" : "opacity-100",
           ].join(" ")}
         >
-          <div className="text-[clamp(16px,1.7vw,22px)] font-medium leading-tight">
+          <div className="text-[clamp(14px,4vw,22px)] font-medium leading-tight">
             crafting
           </div>
-          <div className="mt-1 text-[clamp(34px,4vw,54px)] font-black leading-[1.02] tracking-[-0.02em]">
+          <div className="mt-1 text-[clamp(28px,8.4vw,54px)] font-black leading-[1.02] tracking-[-0.02em]">
             DIGITAL WORLDS
           </div>
-          <div className="mt-2 text-[clamp(16px,1.7vw,22px)] font-medium leading-tight">
+          <div className="mt-2 text-[clamp(14px,4vw,22px)] font-medium leading-tight">
             for the
           </div>
-          <div className="mt-1 whitespace-nowrap text-[clamp(34px,4vw,54px)] font-black leading-[1.02] tracking-[-0.02em]">
+          <div className="mt-1 text-[clamp(28px,8.4vw,54px)] font-black leading-[1.02] tracking-[-0.02em] md:whitespace-nowrap">
             BRANDS OF TOMORROW
           </div>
         </div>
 
         <div
           className={[
-            "pointer-events-none absolute left-6 bottom-12 z-50",
-            "font-satoshi text-[clamp(13px,1.2vw,16px)] font-light uppercase tracking-[0.08em]",
+            "pointer-events-none absolute left-5 right-5 bottom-6 z-50",
+            "sm:left-6 sm:right-auto sm:bottom-10 md:bottom-12",
+            "font-satoshi text-[clamp(10.5px,2.8vw,16px)] font-light uppercase tracking-[0.08em]",
             "transition-colors motion-reduce:transition-none",
             "duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
+            "max-w-[58%] sm:max-w-none",
             aboutOpen ? "text-white/70" : "text-black/60",
           ].join(" ")}
         >
           Digital Content Manager based in Bengaluru.
         </div>
 
-        <div className="absolute bottom-8 right-0">
+        <div className="absolute bottom-6 right-5 sm:bottom-8 sm:right-0">
           <Navigation
             aboutOpen={aboutOpen}
             onAboutClick={() => setAboutOpen((v) => !v)}
