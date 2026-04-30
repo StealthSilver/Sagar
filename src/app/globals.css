@@ -24,3 +24,80 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.font-sekuya {
+  font-family: "Sekuya", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+}
+
+.sagar-logo {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  --reveal-r: 56px;
+}
+
+.sagar-logo__text {
+  position: relative;
+  display: inline-block;
+}
+
+.sagar-logo__text--ocean {
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  background-image: url("/ocean.jpg");
+  background-size: 140% 140%;
+  background-position: var(--ocean-x, 50%) var(--ocean-y, 50%);
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  opacity: 0;
+  transition: opacity 180ms ease-out;
+  clip-path: circle(
+    var(--reveal-r) at var(--reveal-x, 50%) var(--reveal-y, 50%)
+  );
+  will-change: clip-path, opacity;
+}
+
+.sagar-logo__cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(var(--reveal-r) * 2);
+  height: calc(var(--reveal-r) * 2);
+  transform: translate(
+      calc(var(--reveal-x, -9999px) - var(--reveal-r)),
+      calc(var(--reveal-y, -9999px) - var(--reveal-r))
+    )
+    translateZ(0);
+  border-radius: 999px;
+  border: 2px solid rgba(18, 38, 58, 0.55);
+  box-shadow:
+    0 10px 30px rgba(18, 38, 58, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 160ms ease-out;
+  mix-blend-mode: multiply;
+  will-change: transform, opacity;
+}
+
+.sagar-logo:hover {
+  cursor: none;
+}
+
+.sagar-logo:hover .sagar-logo__text--ocean {
+  opacity: 1;
+}
+
+.sagar-logo:hover .sagar-logo__cursor {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sagar-logo__text--ocean,
+  .sagar-logo__cursor {
+    transition: none;
+  }
+}
