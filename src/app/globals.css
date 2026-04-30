@@ -30,6 +30,64 @@ body {
     Arial, sans-serif;
 }
 
+.sagar-marquee {
+  --sagar-marquee-duration: 12s;
+  position: relative;
+  overflow: hidden;
+}
+
+.sagar-marquee__inner {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: sagar-marquee-scroll var(--sagar-marquee-duration) linear infinite;
+}
+
+.sagar-marquee__track {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  padding: 22px 0;
+  white-space: nowrap;
+  flex: none;
+}
+
+.sagar-marquee__item {
+  font-family: var(--font-satoshi), system-ui, -apple-system, "Segoe UI", Roboto,
+    Arial, sans-serif;
+  font-weight: 900;
+  color: #000;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1;
+}
+
+.sagar-marquee__sep {
+  font-family: var(--font-satoshi), system-ui, -apple-system, "Segoe UI", Roboto,
+    Arial, sans-serif;
+  font-weight: 900;
+  color: #000;
+  font-size: clamp(18px, 2vw, 28px);
+  line-height: 1;
+}
+
+@keyframes sagar-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sagar-marquee__inner {
+    animation: none;
+    transform: none;
+  }
+}
+
 .font-cursive {
   font-family: "Dancing Script", "Sekuya", cursive;
 }
