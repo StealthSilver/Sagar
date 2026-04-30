@@ -58,32 +58,37 @@ export default function SagarLogo({
 
   return (
     <div
-      ref={rootRef}
       className={["sagar-logo", className].filter(Boolean).join(" ")}
-      onMouseMove={onMouseMove}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      aria-label="Sagar"
     >
-      <span className="sagar-logo__line">
-        <span
-          className={["sagar-logo__text", textClassName].filter(Boolean).join(" ")}
-        >
-          SAGAR
+      <div
+        ref={rootRef}
+        className="sagar-logo__primary"
+        onMouseMove={onMouseMove}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        aria-label="Sagar"
+      >
+        <span className="sagar-logo__line">
+          <span
+            className={["sagar-logo__text", textClassName].filter(Boolean).join(" ")}
+          >
+            SAGAR
+          </span>
+          <span
+            className={[
+              "sagar-logo__text",
+              "sagar-logo__text--ocean",
+              textClassName,
+            ]
+              .filter(Boolean)
+              .join(" ")}
+            aria-hidden="true"
+          >
+            SAGAR
+          </span>
         </span>
-        <span
-          className={[
-            "sagar-logo__text",
-            "sagar-logo__text--ocean",
-            textClassName,
-          ]
-            .filter(Boolean)
-            .join(" ")}
-          aria-hidden="true"
-        >
-          SAGAR
-        </span>
-      </span>
+        <span className="sagar-logo__cursor" aria-hidden="true" />
+      </div>
 
       {secondaryText ? (
         <span
@@ -116,24 +121,11 @@ export default function SagarLogo({
                 >
                   {secondaryText}
                 </span>
-                <span
-                  className={[
-                    "sagar-logo__text",
-                    "sagar-logo__text--ocean",
-                    textClassName,
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                  aria-hidden="true"
-                >
-                  {secondaryText}
-                </span>
               </span>
             ) : null}
           </span>
         </span>
       ) : null}
-      <span className="sagar-logo__cursor" aria-hidden="true" />
     </div>
   );
 }

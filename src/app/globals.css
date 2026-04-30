@@ -48,6 +48,11 @@ body {
   --reveal-r: 56px;
 }
 
+.sagar-logo__primary {
+  position: relative;
+  display: inline-block;
+}
+
 .sagar-logo__line {
   position: relative;
   display: inline-block;
@@ -103,15 +108,15 @@ body {
   will-change: transform, opacity;
 }
 
-.sagar-logo:hover {
+.sagar-logo__primary:hover {
   cursor: none;
 }
 
-.sagar-logo:hover .sagar-logo__text--ocean {
+.sagar-logo__primary:hover .sagar-logo__text--ocean {
   opacity: 1;
 }
 
-.sagar-logo:hover .sagar-logo__cursor {
+.sagar-logo__primary:hover .sagar-logo__cursor {
   opacity: 1;
 }
 
