@@ -7,6 +7,32 @@ import { useEffect, useRef, useState } from "react";
 export default function Hero() {
   const [aboutOpen, setAboutOpen] = useState(false);
   const pendingHashRef = useRef(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const logoWrapRef = useRef<HTMLDivElement | null>(null);
+  const [captionTop, setCaptionTop] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!aboutOpen) return;
+    const containerEl = containerRef.current;
+    const logoEl = logoWrapRef.current;
+    if (!containerEl || !logoEl) return;
+
+    const update = () => {
+      const containerRect = containerEl.getBoundingClientRect();
+      const logoRect = logoEl.getBoundingClientRect();
+      const gap = 12; // px spacing below the logo/MISHRA block
+      setCaptionTop(Math.max(0, logoRect.bottom - containerRect.top + gap));
+    };
+
+    update();
+    const ro = new ResizeObserver(() => update());
+    ro.observe(logoEl);
+    window.addEventListener("resize", update);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", update);
+    };
+  }, [aboutOpen]);
 
   useEffect(() => {
     if (!aboutOpen) return;
@@ -27,24 +53,36 @@ export default function Hero() {
         aria-hidden="true"
       />
 
-      <div className="relative z-50 mx-auto min-h-screen max-w-7xl px-6 pt-8">
-        <SagarLogo
-          textClassName={[
-            "font-sekuya",
-            "font-black",
-            "text-[clamp(40px,6vw,88px)]",
-            "leading-[1] tracking-[-0.01em]",
-          ].join(" ")}
-          secondaryText="MISHRA"
-          secondaryActive={aboutOpen}
-          className={[
-            "relative z-50",
-            "transition-colors duration-300 ease-out motion-reduce:transition-none",
-            aboutOpen ? "text-white" : "text-black",
-          ].join(" ")}
-        />
+      <div
+        ref={containerRef}
+        className="relative z-50 mx-auto min-h-screen max-w-7xl px-6 pt-8"
+      >
+        <div ref={logoWrapRef} className="inline-block">
+          <SagarLogo
+            textClassName={[
+              "font-sekuya",
+              "font-black",
+              "text-[clamp(40px,6vw,88px)]",
+              "leading-[1] tracking-[-0.01em]",
+            ].join(" ")}
+            secondaryText="MISHRA"
+            secondaryActive={aboutOpen}
+            className={[
+              "relative z-50",
+              "transition-colors duration-300 ease-out motion-reduce:transition-none",
+              aboutOpen ? "text-white" : "text-black",
+            ].join(" ")}
+          />
+        </div>
 
-        <div className="absolute left-6 top-1/2 -translate-y-1/2 font-satoshi text-black">
+        <div
+          aria-hidden={aboutOpen}
+          className={[
+            "absolute left-6 top-1/2 -translate-y-1/2 font-satoshi text-black",
+            "transition-opacity duration-300 ease-out motion-reduce:transition-none",
+            aboutOpen ? "pointer-events-none opacity-0" : "opacity-100",
+          ].join(" ")}
+        >
           <div className="text-[clamp(16px,1.7vw,22px)] font-medium leading-tight">
             crafting
           </div>
@@ -59,7 +97,21 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="pointer-events-none absolute bottom-12 left-6 font-satoshi text-[clamp(13px,1.2vw,16px)] font-light uppercase tracking-[0.08em] text-black/60">
+        <div
+          className={[
+            "pointer-events-none absolute left-6 z-50",
+            "font-satoshi text-[clamp(13px,1.2vw,16px)] font-light uppercase tracking-[0.08em]",
+            "transition-[top,bottom,transform,opacity,color] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none",
+            aboutOpen
+              ? "bottom-auto text-white/70"
+              : "bottom-12 top-auto text-black/60",
+          ].join(" ")}
+          style={
+            aboutOpen && captionTop != null
+              ? { top: `${captionTop}px` }
+              : undefined
+          }
+        >
           Digital Content Manager based in Bengaluru.
         </div>
 
