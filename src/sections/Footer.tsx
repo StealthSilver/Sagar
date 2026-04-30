@@ -158,7 +158,8 @@ export default function Footer() {
                 </div>
 
                 <div className="mt-2 flex items-start sm:items-start">
-                  <div className="flex flex-row gap-3">
+                  <div className="flex flex-col items-start gap-3">
+                    <div className="flex flex-row gap-3">
                     <Link
                       href="mailto:sagarmishra4132@gmail.com"
                       target="_blank"
@@ -226,6 +227,11 @@ export default function Footer() {
                     >
                       <IconInstagram className="h-[20px] w-[20px]" />
                     </Link>
+                    </div>
+
+                    <div className="font-satoshi text-[11px] font-light uppercase tracking-[0.16em] text-black/65">
+                      BASED IN BENGALURU
+                    </div>
                   </div>
                 </div>
               </div>

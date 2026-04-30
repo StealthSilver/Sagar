@@ -1,17 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Hero from "@/sections/Hero";
 import Works from "@/sections/Works";
 import CTA from "@/sections/CTA";
 import Footer from "@/sections/Footer";
-import MarqueeWhatIDo from "@/sections/MarqueeWhatIDo";
 import { LandingContext } from "@/state/landing";
 
 export default function LandingShell() {
   const [aboutOpen, setAboutOpen] = useState(false);
-  const [worksRevealing, setWorksRevealing] = useState(false);
-  const [worksOverlayCovering, setWorksOverlayCovering] = useState(false);
   const triggeredRef = useRef(false);
 
   // If the page was loaded directly at /#about, open the about state.
@@ -22,8 +19,9 @@ export default function LandingShell() {
     }
   }, []);
 
-  // Lock page scroll while about is open so the only way out (apart from
-  // clicking HOME) is the works reveal animation.
+  // Lock page scroll while about is open. The only way out (apart from
+  // clicking HOME) is to scroll, which closes about and slides the page
+  // into Works in one continuous motion.
   useEffect(() => {
     if (!aboutOpen) return;
     const html = document.documentElement;
@@ -38,16 +36,47 @@ export default function LandingShell() {
     };
   }, [aboutOpen]);
 
-  // When the user attempts to scroll while on #about, kick off the works reveal.
+  // Reset the one-shot trigger whenever about closes by any other means.
   useEffect(() => {
-    if (!aboutOpen || worksRevealing) return;
+    if (!aboutOpen) {
+      triggeredRef.current = false;
+    }
+  }, [aboutOpen]);
+
+  // When the user attempts to scroll while on #about, close the about
+  // overlay and smooth-scroll into Works at the same time so the
+  // transition mirrors a normal hero -> works scroll (no separate
+  // marquee reveal step).
+  useEffect(() => {
+    if (!aboutOpen) return;
 
     let touchStartY: number | null = null;
 
     const trigger = () => {
       if (triggeredRef.current) return;
       triggeredRef.current = true;
-      setWorksRevealing(true);
+
+      // Unlock scroll synchronously so window.scrollTo can move the page.
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+
+      // Close about — the dark panel slides out to the right (Hero owns
+      // that animation) at the same time the page scrolls down.
+      setAboutOpen(false);
+
+      const worksEl = document.getElementById("works");
+      if (worksEl) {
+        const top = window.scrollY + worksEl.getBoundingClientRect().top;
+        window.scrollTo({
+          top: Math.max(0, top),
+          behavior: "smooth",
+        });
+      }
+
+      const base = `${window.location.pathname}${window.location.search}`;
+      if (window.location.hash === "#about") {
+        window.history.replaceState(null, "", `${base}#works`);
+      }
     };
 
     const onWheel = (e: WheelEvent) => {
@@ -82,87 +111,14 @@ export default function LandingShell() {
       window.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("keydown", onKeyDown);
     };
-  }, [aboutOpen, worksRevealing]);
-
-  // After the overlay mounts at translate-x-[-100%], flip it to translate-x-0
-  // on the next paint to play the slide-in transition.
-  useEffect(() => {
-    if (!worksRevealing) {
-      setWorksOverlayCovering(false);
-      return;
-    }
-    let id1 = 0;
-    let id2 = 0;
-    id1 = window.requestAnimationFrame(() => {
-      id2 = window.requestAnimationFrame(() => setWorksOverlayCovering(true));
-    });
-    return () => {
-      window.cancelAnimationFrame(id1);
-      window.cancelAnimationFrame(id2);
-    };
-  }, [worksRevealing]);
-
-  // If about is closed any other way, make sure reveal state resets.
-  useEffect(() => {
-    if (!aboutOpen) {
-      triggeredRef.current = false;
-      setWorksRevealing(false);
-    }
   }, [aboutOpen]);
 
-  const settleWorksReveal = useCallback(() => {
-    // Unlock scroll synchronously so we can move the viewport.
-    document.documentElement.style.overflow = "";
-    document.body.style.overflow = "";
-
-    const worksEl = document.getElementById("works");
-    if (worksEl) {
-      const top = window.scrollY + worksEl.getBoundingClientRect().top;
-      window.scrollTo({ top: Math.max(0, top), behavior: "auto" });
-    }
-
-    const base = `${window.location.pathname}${window.location.search}`;
-    window.history.replaceState(null, "", `${base}#works`);
-
-    triggeredRef.current = false;
-    setAboutOpen(false);
-    setWorksRevealing(false);
-  }, []);
-
   return (
-    <LandingContext.Provider
-      value={{ aboutOpen, worksRevealing, setAboutOpen }}
-    >
+    <LandingContext.Provider value={{ aboutOpen, setAboutOpen }}>
       <Hero />
       <Works />
       <CTA />
       <Footer />
-
-      {worksRevealing ? (
-        <div
-          aria-hidden="true"
-          className={[
-            "fixed inset-0 z-[60] overflow-hidden bg-[#f9f6eb]",
-            "transform-gpu",
-            "transition-transform motion-reduce:transition-none",
-            "duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]",
-            worksOverlayCovering ? "translate-x-0" : "-translate-x-full",
-          ].join(" ")}
-          onTransitionEnd={(e) => {
-            // Tailwind v4 emits `propertyName === "translate"` for
-            // `translate-x-*` utilities. Accept either name so the reveal
-            // actually settles on browsers using the new CSS `translate`
-            // property.
-            if (e.propertyName !== "transform" && e.propertyName !== "translate")
-              return;
-            if (e.target !== e.currentTarget) return;
-            if (!worksOverlayCovering) return;
-            settleWorksReveal();
-          }}
-        >
-          <MarqueeWhatIDo sectionId={null} />
-        </div>
-      ) : null}
     </LandingContext.Provider>
   );
 }

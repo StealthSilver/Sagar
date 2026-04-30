@@ -4,7 +4,6 @@ import { createContext, useContext } from "react";
 
 export type LandingState = {
   aboutOpen: boolean;
-  worksRevealing: boolean;
   setAboutOpen: (next: boolean | ((prev: boolean) => boolean)) => void;
 };
 
