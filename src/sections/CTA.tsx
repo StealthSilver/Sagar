@@ -61,6 +61,21 @@ export default function CTA() {
           >
             Email me
           </Link>
+          <Link
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={[
+              "inline-flex w-fit items-center justify-center rounded-[8px] px-5 py-3 sm:px-6",
+              "border border-white/20 bg-white/[0.06] text-white/90",
+              "font-satoshi text-xs font-black uppercase tracking-[0.16em] sm:text-sm sm:tracking-[0.18em]",
+              "transition-colors duration-300 ease-out motion-reduce:transition-none",
+              "hover:bg-white/[0.10] hover:border-white/30 hover:text-white",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-4 focus-visible:ring-offset-[#0b1722]",
+            ].join(" ")}
+          >
+            Resume
+          </Link>
         </div>
       </div>
     </section>
