@@ -10,7 +10,10 @@ const items: NavItem[] = [
   { label: "ABOUT", href: "#about" },
   { label: "WORKS", href: "#works" },
   { label: "CONTACT", href: "#contact" },
-  { label: "RESUME", href: "/resume.pdf" },
+  {
+    label: "RESUME",
+    href: "https://drive.google.com/file/d/1QxRqrwjTHk03Y0dWaY6VMyjjlpHPbOX1/view",
+  },
 ];
 
 type Props = {

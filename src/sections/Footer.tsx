@@ -162,11 +162,9 @@ export default function Footer() {
                 <div className="mt-1 flex items-start sm:mt-2 sm:items-start">
                   <div className="flex flex-col items-start gap-3">
                     <div className="flex flex-row gap-2.5 sm:gap-3">
-                    <Link
+                    <a
                       href="mailto:sagarmishra4132@gmail.com"
-                      target="_blank"
-                      rel="noreferrer"
-                      aria-label="Email"
+                      aria-label="Email sagarmishra4132@gmail.com"
                       className={[
                         "group inline-flex h-9 w-9 items-center justify-center rounded-[10px] sm:h-11 sm:w-11",
                         "border border-black/20 bg-black/[0.03]",
@@ -177,7 +175,7 @@ export default function Footer() {
                       ].join(" ")}
                     >
                       <IconMail className="h-[16px] w-[16px] sm:h-[20px] sm:w-[20px]" />
-                    </Link>
+                    </a>
 
                     <Link
                       href="https://x.com/Sagar_mishra_0"
