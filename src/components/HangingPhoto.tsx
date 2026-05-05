@@ -20,10 +20,11 @@ const GRAVITY_OVER_LENGTH = 1.2e-5;
 const DAMPING_PER_MS = 0.9994;
 const MAX_ANGLE = (Math.PI / 180) * 65;
 
-const STRING_LENGTH = 260; // px from pivot to top of frame
-const FRAME_WIDTH = 184;
-const FRAME_HEIGHT = 220;
-const FRAME_PADDING = 14;
+const STRING_LENGTH = 288; // px from pivot to top of frame
+const FRAME_WIDTH = 228;
+const FRAME_HEIGHT = 274;
+/** Narrow mat like a lab print — mostly image, thin white border. */
+const FRAME_PADDING = 5;
 const PIVOT_OFFSET_TOP = -28; // pivot lifted above the panel edge
 
 export default function HangingPhoto({ active }: Props) {
@@ -289,12 +290,11 @@ export default function HangingPhoto({ active }: Props) {
             width: FRAME_WIDTH,
             height: FRAME_HEIGHT,
             padding: FRAME_PADDING,
-            borderRadius: 6,
-            background:
-              "linear-gradient(180deg, #f0e6c6 0%, #e2d2a3 45%, #c9b377 100%)",
+            borderRadius: 0,
+            background: "#ffffff",
             boxShadow: dragging
-              ? "0 18px 36px rgba(0,0,0,0.55), 0 4px 10px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.35), inset 0 -2px 0 rgba(0,0,0,0.18)"
-              : "0 14px 28px rgba(0,0,0,0.45), 0 3px 8px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(255,255,255,0.3), inset 0 -2px 0 rgba(0,0,0,0.18)",
+              ? "0 18px 36px rgba(0,0,0,0.55), 0 4px 10px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(0,0,0,0.08)"
+              : "0 14px 28px rgba(0,0,0,0.45), 0 3px 8px rgba(0,0,0,0.4), inset 0 0 0 1px rgba(0,0,0,0.08)",
             touchAction: "none",
           }}
           role="img"
@@ -303,9 +303,9 @@ export default function HangingPhoto({ active }: Props) {
           <div
             className="relative h-full w-full overflow-hidden"
             style={{
-              background: "#f9f6eb",
-              boxShadow:
-                "inset 0 0 0 1px rgba(0,0,0,0.18), inset 0 2px 6px rgba(0,0,0,0.35)",
+              background: "#ffffff",
+              borderRadius: 0,
+              boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.06)",
             }}
           >
             <Image
@@ -317,14 +317,14 @@ export default function HangingPhoto({ active }: Props) {
               style={{ objectFit: "cover", pointerEvents: "none" }}
               priority={false}
             />
-            {/* Soft highlight across the glass for realism. */}
+            {/* Very subtle paper sheen — keeps it matte / print-like. */}
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-0"
               style={{
                 background:
-                  "linear-gradient(135deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.05) 35%, rgba(255,255,255,0) 60%)",
-                mixBlendMode: "screen",
+                  "linear-gradient(125deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 42%)",
+                mixBlendMode: "soft-light",
               }}
             />
           </div>
